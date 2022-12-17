@@ -1,0 +1,29 @@
+.container {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1rem;
+  background-color: #161616;
+  border-radius: 15px;
+}
+
+.container span {
+  flex: 1;
+  text-align: center;
+  font-weight: 700;
+}
+
+.container input {
+  flex: 1;
+  background: none;
+  border: none;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1rem;
+  background: linear-gradient(95.89deg, #eb00ff 24.3%, #2c0aff 76.82%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

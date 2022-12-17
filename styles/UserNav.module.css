@@ -66,13 +66,13 @@
 
 .links {
   display: flex;
-  gap: 3rem;
   list-style: none;
   font-size: 1.5rem;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   z-index: 11;
+  gap: 3rem;
 
   position: fixed;
   background-color: #101010;
@@ -101,4 +101,11 @@
 
 .links li {
   width: 100%;
+}
+
+.links svg {
+  position: absolute;
+  top: 5vh;
+  right: 5vh;
+  font-size: 2rem;
 }

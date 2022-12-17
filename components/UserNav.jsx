@@ -59,9 +59,22 @@ const UserNav = () => {
           }}
           className={styles.links}
         >
-          <MdClose />
+          <MdClose
+            onClick={() => {
+              setOpen(!open);
+            }}
+          />
           <li>
-            <Link href={"/"}>Workouts</Link>
+            <Link href={"/"}>Home</Link>
+          </li>
+          <li>
+            <Link href={"/workout"}>Workouts</Link>
+          </li>
+          <li>
+            <Link href={"/meal"}>Meals</Link>
+          </li>
+          <li>
+            <Link href={"/chat"}>Chat</Link>
           </li>
         </motion.ul>
       )}
