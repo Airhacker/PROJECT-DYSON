@@ -22,17 +22,17 @@
 .userNameContainer {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: flex-start;
 }
 
 .userNameContainer p {
-  font-size: 1rem;
+  font-size: 0.75rem;
   margin: 0;
 }
 
 .userNameContainer span {
-  font-size: 1.25rem;
+  font-size: 2rem;
   font-weight: 700;
   background: linear-gradient(128.51deg, #001aff 9.11%, #ff0a9d 89.13%);
   -webkit-background-clip: text;
@@ -50,7 +50,7 @@
 .navContainer svg {
   background: none;
   border: none;
-  font-size: 2.5rem;
+  font-size: 2rem;
   padding: 0rem;
 }
 
@@ -67,12 +67,12 @@
 .links {
   display: flex;
   list-style: none;
-  font-size: 1.5rem;
+  font-size: 1rem;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   z-index: 11;
-  gap: 3rem;
+  gap: 2rem;
 
   position: fixed;
   background-color: #101010;
@@ -91,8 +91,9 @@
   color: white;
   width: 100%;
   display: inline-flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  text-align: center;
 }
 
 .links a:hover {
@@ -100,7 +101,15 @@
 }
 
 .links li {
+  display: flex;
+  align-items: center;
   width: 100%;
+  gap: 1rem;
+}
+
+.links li svg {
+  position: inherit;
+  font-size: 1rem;
 }
 
 .links svg {

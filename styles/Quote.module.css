@@ -1,0 +1,46 @@
+.container {
+  width: 90%;
+  margin: 0 auto;
+  padding-bottom: 1rem;
+  text-align: center;
+}
+
+.quoteContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0rem;
+  position: relative;
+}
+
+.container p {
+  font-size: 0.75rem;
+  margin: 0;
+  padding-top: 1rem;
+}
+
+.quoteContainer svg {
+  font-size: 1rem;
+}
+
+.quoteLeft {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.quoteRight {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.quoteContainer textarea {
+  width: 80%;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+}
