@@ -5,10 +5,21 @@ import TextareaAutosize from "react-textarea-autosize";
 
 import styles from "../styles/Quote.module.css";
 import { ImQuotesLeft, ImQuotesRight } from "react-icons/im";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  orderBy,
+  serverTimestamp,
+  limit,
+  query,
+  getDocs,
+} from "firebase/firestore";
 
 const Quote = () => {
   const [text, setText] = useState("");
+  const [quote, setQuote] = useState("");
+
+  const collectionRef = collection(db, "Quotes");
 
   const handleChange = (e) => {
     setText(e.target.value);
@@ -16,15 +27,19 @@ const Quote = () => {
 
   const addTextToFirebase = () => {
     // adds text from text area in firebase collection "Quotes" whenever clicks off of the text area
-    const collectionRef = collection(db, "Quotes");
+    // const collectionRef = collection(db, "Quotes");
     addDoc(collectionRef, {
       text,
       timestamp: serverTimestamp(),
     });
   };
 
-  const getMostRecentQuote = () => {
-    console.log("dont know what to do here :(");
+  const getMostRecentQuote = async () => {
+    const q = query(collectionRef, orderBy("timestamp", "desc"), limit(1));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      setQuote(doc.data().text);
+    });
   };
 
   useEffect(() => {
@@ -39,7 +54,7 @@ const Quote = () => {
         <TextareaAutosize
           minRows={1}
           maxRows={3}
-          placeholder="Inspirational Quote!"
+          placeholder={quote}
           value={text}
           onChange={handleChange}
           onBlur={() => addTextToFirebase(text)}

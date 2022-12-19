@@ -44,7 +44,7 @@ const UserNav = () => {
               <Link href={"/auth/login"}>sign in</Link>
             ) : (
               <Link href={"/dashboard"}>
-                <img src={user.photoURL} />
+                <img src={user.photoURL} referrerPolicy="no-referrer" />
               </Link>
             )}
           </div>
