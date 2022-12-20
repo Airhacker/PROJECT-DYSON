@@ -1,5 +1,4 @@
-import { auth, db } from "../utils/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { db } from "../utils/firebase";
 import { useEffect, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 
@@ -27,7 +26,6 @@ const Quote = () => {
 
   const addTextToFirebase = () => {
     // adds text from text area in firebase collection "Quotes" whenever clicks off of the text area
-    // const collectionRef = collection(db, "Quotes");
     addDoc(collectionRef, {
       text,
       timestamp: serverTimestamp(),
