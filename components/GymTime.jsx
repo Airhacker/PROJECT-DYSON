@@ -10,6 +10,7 @@ import {
   limit,
   getDocs,
 } from "@firebase/firestore";
+import { toast } from "react-toastify";
 
 const GymTime = () => {
   const [time, setTime] = useState("00:00");
@@ -26,6 +27,12 @@ const GymTime = () => {
     addDoc(collectionRef, {
       time,
       timestamp: serverTimestamp(),
+    });
+
+    // toast notification for when gym time is updated
+    toast.success("Gym time updated! 💪", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 500,
     });
   };
 

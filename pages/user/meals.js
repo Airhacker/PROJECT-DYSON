@@ -1,9 +1,9 @@
-const Chat = () => {
+const Meals = () => {
   return (
     <div>
-      <h1>Chat</h1>
+      <h1>Meals</h1>
       <p>This page is still in production!</p>
     </div>
   );
 };
-export default Chat;
+export default Meals;

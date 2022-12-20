@@ -13,6 +13,7 @@ import {
   query,
   getDocs,
 } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 const Quote = () => {
   const [text, setText] = useState("");
@@ -29,6 +30,12 @@ const Quote = () => {
     addDoc(collectionRef, {
       text,
       timestamp: serverTimestamp(),
+    });
+
+    // toast notification for when quote is updated
+    toast.success("Quote of the day updated! 😁", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 500,
     });
   };
 

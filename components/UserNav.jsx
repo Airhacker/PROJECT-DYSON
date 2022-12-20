@@ -41,16 +41,18 @@ const UserNav = () => {
         <div className={styles.userContainer}>
           <div className={styles.userImageContainer}>
             {!user ? (
-              <Link href={"/auth/login"}>sign in</Link>
+              <Link href={"/auth/login"}>
+                <button>Sign in</button>
+              </Link>
             ) : (
-              <Link href={"/dashboard"}>
+              <Link href={"/auth/dashboard"}>
                 <img src={user.photoURL} referrerPolicy="no-referrer" />
               </Link>
             )}
           </div>
           <div className={styles.userNameContainer}>
-            <p>HELLO,</p>
-            {!user ? <span>Stranger</span> : <span>{userName}</span>}
+            {user && <p>HELLO,</p>}
+            {user && <span>{userName}</span>}
           </div>
         </div>
         <div className={styles.navContainer}>
@@ -83,11 +85,11 @@ const UserNav = () => {
           </li>
           <li>
             <FaDumbbell />
-            <Link href={"/workout"}>Workouts</Link>
+            <Link href={"/user/workout"}>Workouts</Link>
           </li>
           <li>
             <MdFastfood />
-            <Link href={"/meal"}>Meals</Link>
+            <Link href={"/user/meals"}>Meals</Link>
           </li>
           <li>
             <AiFillWechat />

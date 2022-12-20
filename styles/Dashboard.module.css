@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0rem;
+  gap: 1rem;
+}
+
+.container h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.container button {
+  padding: 0.5rem 1.5rem;
+  border-radius: 15px;
+  border: none;
+  font-size: 0.75rem;
+  background: linear-gradient(115.34deg, #eb00ff 0%, #2c0aff 100%);
+}

@@ -1,9 +1,9 @@
-const Chat = () => {
+const Workout = () => {
   return (
     <div>
-      <h1>Chat</h1>
+      <h1>Workout</h1>
       <p>This page is still in production!</p>
     </div>
   );
 };
-export default Chat;
+export default Workout;
