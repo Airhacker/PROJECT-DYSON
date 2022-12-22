@@ -7,12 +7,12 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_APP_ID,
+  apiKey: "AIzaSyA3bujV-ogKWRQOLS-y1ck6e_X2iKaMFAA",
+  authDomain: "gigachad-workout-app.firebaseapp.com",
+  projectId: "gigachad-workout-app",
+  storageBucket: "gigachad-workout-app.appspot.com",
+  messagingSenderId: "222197614398",
+  appId: "1:222197614398:web:d91efc963ce9cc5b690e6f",
 };
 
 // Initialize Firebase

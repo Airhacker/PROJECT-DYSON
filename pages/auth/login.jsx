@@ -1,13 +1,15 @@
 import { FcGoogle } from "react-icons/fc";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "../../utils/firebase";
+import { auth, db } from "../../utils/firebase";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect } from "react";
+import { addDoc, collection } from "@firebase/firestore";
 
 const Login = () => {
   const route = useRouter();
   const [user, loading] = useAuthState(auth);
+  const userRef = collection(db, "users");
   //Sign in with Google
   const googleProvider = new GoogleAuthProvider();
   const GoogleLogin = async () => {
@@ -22,6 +24,7 @@ const Login = () => {
   useEffect(() => {
     try {
       if (user) {
+        console.log(user);
         route.push("/");
       }
     } catch (error) {
