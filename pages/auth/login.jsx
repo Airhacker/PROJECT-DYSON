@@ -4,12 +4,11 @@ import { auth, db } from "../../utils/firebase";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect } from "react";
-import { addDoc, collection } from "@firebase/firestore";
+import { serverTimestamp, setDoc, doc } from "@firebase/firestore";
 
 const Login = () => {
   const route = useRouter();
   const [user, loading] = useAuthState(auth);
-  const userRef = collection(db, "users");
   //Sign in with Google
   const googleProvider = new GoogleAuthProvider();
   const GoogleLogin = async () => {
@@ -21,10 +20,20 @@ const Login = () => {
     }
   };
 
+  const updateUser = async () => {
+    await setDoc(doc(db, "users", user.uid), {
+      displayName: user.displayName,
+      displayPicture: user.photoURL,
+      userId: user.uid,
+      loginTime: serverTimestamp(),
+    });
+  };
+
   useEffect(() => {
     try {
       if (user) {
         console.log(user);
+        updateUser();
         route.push("/");
       }
     } catch (error) {
