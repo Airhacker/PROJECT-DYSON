@@ -9,11 +9,12 @@ import { serverTimestamp, setDoc, doc } from "@firebase/firestore";
 const Login = () => {
   const route = useRouter();
   const [user, loading] = useAuthState(auth);
+
   //Sign in with Google
   const googleProvider = new GoogleAuthProvider();
   const GoogleLogin = async () => {
     try {
-      const result = await signInWithPopup(auth, googleProvider);
+      await signInWithPopup(auth, googleProvider);
       route.push("/");
     } catch (error) {
       console.log(error);
