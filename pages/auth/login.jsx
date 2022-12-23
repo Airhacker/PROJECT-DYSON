@@ -1,6 +1,7 @@
 import { FcGoogle } from "react-icons/fc";
 import { signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
 import { auth, db } from "../../utils/firebase";
+import styles from "../../styles/Login.module.css";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect } from "react";
@@ -15,21 +16,24 @@ const Login = () => {
   const GoogleLogin = async () => {
     try {
       await signInWithRedirect(auth, googleProvider);
-      if (user) {
-        route.push("/");
-      }
+      route.push("/");
     } catch (error) {
       console.log(error);
     }
   };
 
   const updateUser = async () => {
-    await setDoc(doc(db, "users", user.uid), {
-      displayName: user.displayName,
-      displayPicture: user.photoURL,
-      userId: user.uid,
-      loginTime: serverTimestamp(),
-    });
+    await setDoc(
+      doc(db, "users", user.uid),
+      {
+        displayName: user.displayName,
+        displayPicture: user.photoURL,
+        userId: user.uid,
+        userEmail: user.email,
+        loginTime: serverTimestamp(),
+      },
+      { merge: true }
+    );
   };
 
   useEffect(() => {
@@ -45,7 +49,7 @@ const Login = () => {
   }, [user]);
 
   return (
-    <div>
+    <div className={styles.container}>
       <h3>Welcome,</h3>
       <h4>Sign in using one of the following providers</h4>
       <button onClick={GoogleLogin}>

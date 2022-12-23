@@ -3,6 +3,7 @@ import { auth } from "../../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import UserList from "../../components/UserList";
 
 const Dashboard = () => {
   const route = useRouter();
@@ -20,8 +21,8 @@ const Dashboard = () => {
 
   return (
     <div className={styles.container}>
-      <h1>Your Dashboard</h1>
       <button onClick={() => auth.signOut()}>Sign Out</button>
+      <UserList />
     </div>
   );
 };
