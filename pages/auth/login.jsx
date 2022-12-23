@@ -12,9 +12,9 @@ const Login = () => {
 
   //Sign in with Google
   const googleProvider = new GoogleAuthProvider();
-  const GoogleLogin = () => {
+  const GoogleLogin = async () => {
     try {
-      signInWithRedirect(auth, googleProvider);
+      await signInWithRedirect(auth, googleProvider);
       if (user) {
         route.push("/");
       }
