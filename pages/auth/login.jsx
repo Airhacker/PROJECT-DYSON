@@ -15,7 +15,9 @@ const Login = () => {
   const GoogleLogin = () => {
     try {
       signInWithRedirect(auth, googleProvider);
-      route.push("/");
+      if (user) {
+        route.push("/");
+      }
     } catch (error) {
       console.log(error);
     }
