@@ -12,9 +12,9 @@ const Login = () => {
 
   //Sign in with Google
   const googleProvider = new GoogleAuthProvider();
-  const GoogleLogin = async () => {
+  const GoogleLogin = () => {
     try {
-      await signInWithRedirect(auth, googleProvider);
+      signInWithRedirect(auth, googleProvider);
       route.push("/");
     } catch (error) {
       console.log(error);
