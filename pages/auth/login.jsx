@@ -16,7 +16,7 @@ const Login = () => {
   const GoogleLogin = async () => {
     try {
       await signInWithRedirect(auth, googleProvider);
-      route.push("/");
+      console.log("Signed in with Google successfully!");
     } catch (error) {
       console.log(error);
     }
@@ -46,7 +46,7 @@ const Login = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [user]);
+  }, [user, loading]);
 
   return (
     <div className={styles.container}>

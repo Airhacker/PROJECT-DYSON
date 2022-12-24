@@ -17,7 +17,7 @@ const Chat = () => {
         <form>
           {/* input and label for adding images to chat */}
           <input style={{ display: "none" }} type="file" id="file" />
-          <label htmlFor="file">
+          <label htmlFor="file" style={{ display: "none" }}>
             <AiFillCamera />
           </label>
           <input
@@ -28,7 +28,7 @@ const Chat = () => {
               setText(e.target.value);
             }}
           />
-          <button type="submit">
+          <button type="submit" className={styles.submitButton}>
             <BsFillArrowUpCircleFill />
           </button>
         </form>
