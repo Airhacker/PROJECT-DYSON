@@ -1,5 +1,5 @@
 import { FcGoogle } from "react-icons/fc";
-import { signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth, db } from "../../utils/firebase";
 import styles from "../../styles/Login.module.css";
 import { useRouter } from "next/router";
@@ -12,12 +12,14 @@ const Login = () => {
   const [user, loading] = useAuthState(auth);
 
   //Sign in with Google
-  const googleProvider = new GoogleAuthProvider();
+  const provider = new GoogleAuthProvider();
+
   const GoogleLogin = async () => {
     try {
-      await signInWithRedirect(auth, googleProvider);
-      console.log("Signed in with Google successfully!");
+      console.log("Signed in with Google successfully!", user);
+      await signInWithPopup(auth, provider);
     } catch (error) {
+      console.log("error signing in with Google");
       console.log(error);
     }
   };
@@ -44,9 +46,10 @@ const Login = () => {
         route.push("/");
       }
     } catch (error) {
+      console.log("error signing in with Google");
       console.log(error);
     }
-  }, [user, loading]);
+  }, [user]);
 
   return (
     <div className={styles.container}>
