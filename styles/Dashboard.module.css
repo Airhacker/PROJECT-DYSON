@@ -22,4 +22,6 @@
   border: none;
   font-size: 0.75rem;
   background: linear-gradient(115.34deg, #eb00ff 0%, #2c0aff 100%);
+  color: white;
+  text-decoration: none;
 }

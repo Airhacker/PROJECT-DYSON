@@ -20,12 +20,19 @@
   object-fit: cover;
 }
 
+.userImageContainer a {
+  color: white;
+  text-decoration: none;
+}
+
 .userImageContainer button {
   border: none;
   padding: 0.5rem 1.5rem;
   border-radius: 15px;
   font-size: 0.75rem;
   background: linear-gradient(115.34deg, #eb00ff 0%, #2c0aff 100%);
+  color: white;
+  text-decoration: none;
 }
 
 .userNameContainer {

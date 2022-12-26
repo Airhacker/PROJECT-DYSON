@@ -33,4 +33,6 @@
   border-radius: 0.5rem;
   cursor: pointer;
   background-color: #161616;
+  color: white;
+  text-decoration: none;
 }
