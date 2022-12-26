@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-
+import { getMessaging } from "firebase/messaging";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -14,8 +14,8 @@ const firebaseConfig = {
   projectId: "gigachad-workout-app",
   storageBucket: "gigachad-workout-app.appspot.com",
   messagingSenderId: "222197614398",
-  appId: "1:222197614398:web:d91efc963ce9cc5b690e6f"
-}
+  appId: "1:222197614398:web:d91efc963ce9cc5b690e6f",
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

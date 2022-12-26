@@ -26,17 +26,24 @@ const Quote = () => {
   };
 
   const addTextToFirebase = () => {
-    // adds text from text area in firebase collection "Quotes" whenever clicks off of the text area
-    addDoc(collectionRef, {
-      text,
-      timestamp: serverTimestamp(),
-    });
+    if (text.length > 0) {
+      // adds text from text area in firebase collection "Quotes" whenever clicks off of the text area
+      addDoc(collectionRef, {
+        text,
+        timestamp: serverTimestamp(),
+      });
 
-    // toast notification for when quote is updated
-    toast.success("Quote of the day updated! 😁", {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 500,
-    });
+      // toast notification for when quote is updated
+      toast.success("Quote of the day updated! 😁", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 500,
+      });
+    } else {
+      toast.error("Please type something to update the quote! 😭", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 500,
+      });
+    }
   };
 
   const getMostRecentQuote = async () => {

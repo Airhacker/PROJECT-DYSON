@@ -1,7 +1,7 @@
 import styles from "../styles/Chat.module.css";
 import { db, auth } from "../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   addDoc,
   collection,
@@ -11,6 +11,7 @@ import {
   query,
   orderBy,
   limit,
+  limitToLast,
 } from "firebase/firestore";
 import { AiFillCamera } from "react-icons/ai";
 import { BsFillArrowUpCircleFill } from "react-icons/bs";
@@ -20,10 +21,12 @@ const Chat = () => {
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
   const [user] = useAuthState(auth);
+  const [count, setCount] = useState(0);
   const messageRef = collection(db, "messages");
+  const q = query(messageRef, orderBy("submitTime", "asc"), limitToLast(100));
+  const messagesEndRef = useRef();
 
   const getMessages = async () => {
-    const q = query(messageRef, orderBy("submitTime", "asc"), limit(50));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setMessages(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
@@ -35,6 +38,11 @@ const Chat = () => {
     getMessages();
   }, []);
 
+  // Scroll to bottom of chat
+  useEffect(() => {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   const submitMessage = (e) => {
     e.preventDefault();
 
@@ -45,7 +53,6 @@ const Chat = () => {
       displayImage: user.photoURL,
       userID: user.uid,
     });
-
     setText("");
   };
 
@@ -56,7 +63,9 @@ const Chat = () => {
         {messages.map((message) => (
           <ChatMessage {...message} key={message.id}></ChatMessage>
         ))}
+        <div ref={messagesEndRef}></div>
       </div>
+
       <div className={styles.formContainer}>
         <form onSubmit={submitMessage}>
           {/* input and label for adding images to chat */}
