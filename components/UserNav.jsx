@@ -79,19 +79,19 @@ const UserNav = () => {
               setOpen(!open);
             }}
           />
-          <li>
+          <li onClick={() => setOpen(!open)}>
             <AiFillHome />
             <Link href={"/"}>Home</Link>
           </li>
-          <li>
+          <li onClick={() => setOpen(!open)}>
             <FaDumbbell />
             <Link href={"/user/workout"}>Workouts</Link>
           </li>
-          <li>
+          <li onClick={() => setOpen(!open)}>
             <MdFastfood />
             <Link href={"/user/meals"}>Meals</Link>
           </li>
-          <li>
+          <li onClick={() => setOpen(!open)}>
             <AiFillWechat />
             <Link href={"/chat"}>Chat</Link>
           </li>

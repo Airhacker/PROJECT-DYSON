@@ -26,6 +26,8 @@ const Chat = () => {
   const q = query(messageRef, orderBy("submitTime", "asc"), limitToLast(100));
   const messagesEndRef = useRef();
 
+  const isNotEmpty = !text ? styles.dontSend : styles.okToSend;
+
   const getMessages = async () => {
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setMessages(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -45,6 +47,9 @@ const Chat = () => {
 
   const submitMessage = (e) => {
     e.preventDefault();
+
+    // stop function if message is empty
+    if (!text) return;
 
     addDoc(messageRef, {
       text: text,
@@ -81,11 +86,7 @@ const Chat = () => {
               setText(e.target.value);
             }}
           />
-          <button
-            type="submit"
-            className={styles.submitButton}
-            onSubmit={submitMessage}
-          >
+          <button type="submit" className={isNotEmpty} onSubmit={submitMessage}>
             <BsFillArrowUpCircleFill />
           </button>
         </form>

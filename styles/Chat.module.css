@@ -64,3 +64,11 @@
   color: white;
   font-size: 1.5rem;
 }
+
+.dontSend {
+  color: #333333;
+}
+
+.okToSend {
+  color: #0b82fd;
+}
