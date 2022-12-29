@@ -1,27 +1,40 @@
 import { db } from "../utils/firebase";
-import { collection, doc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  onSnapshot,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 const SelectedWorkout = (props) => {
-  const [workouts, setWorkouts] = useState([]);
+  const [workout, setWorkout] = useState([]);
 
-  const getWorkout = async () => {
+  const getWorkouts = async () => {
     const workoutRef = collection(db, "Exercises");
-    const workoutSnapshot = await getDocs(workoutRef);
-    const workoutList = workoutSnapshot.docs.map((doc) => doc.data());
-    setWorkouts(workoutList);
+    const q = query(workoutRef, where("id", "==", props.workout));
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      querySnapshot.docs.map((doc) => {
+        setWorkout(doc.data());
+      });
+    });
+
+    return unsubscribe;
   };
 
   useEffect(() => {
-    getWorkout();
-    console.log(workouts);
+    console.log("the props are", props.workout);
+    getWorkouts();
   }, [props.workout]);
-
-  const handleSubmit = (e) => {};
 
   return (
     <div>
-      <form onSubmit={handleSubmit}></form>
+      <h1>{workout.name}</h1>
+      <p>{workout.id}</p>
+      {workout.exerciseList &&
+        workout.exerciseList.map((exercise) => <p>{exercise}</p>)}
     </div>
   );
 };

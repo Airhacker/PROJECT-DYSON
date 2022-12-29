@@ -1,15 +1,17 @@
 import styles from "../../styles/Workouts.module.css";
-import { auth } from "../../utils/firebase";
+import { auth, db } from "../../utils/firebase";
+import { getDoc, doc } from "@firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SelectedWorkout from "../../components/SelectedWorkout";
 
 const Workout = () => {
-  const [workout, setWorkout] = useState("");
+  const [workoutInput, setWorkoutInput] = useState("");
+  const [workout, setWorkout] = useState([]);
   const [user] = useAuthState(auth);
 
   const selectedWorkout = (e) => {
-    setWorkout(e.target.value);
+    setWorkoutInput(e.target.value);
     console.log(e.target.value);
   };
 
@@ -36,10 +38,11 @@ const Workout = () => {
       ) : (
         <p>Please sign in to view workouts</p>
       )}
-
-      <div className={styles.workoutContainer}>
-        <SelectedWorkout workout={workout}></SelectedWorkout>
-      </div>
+      {workoutInput !== "" ? (
+        <div className={styles.workoutContainer}>
+          <SelectedWorkout workout={workoutInput} />
+        </div>
+      ) : null}
     </div>
   );
 };

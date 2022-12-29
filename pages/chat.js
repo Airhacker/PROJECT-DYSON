@@ -5,12 +5,10 @@ import { useEffect, useRef, useState } from "react";
 import {
   addDoc,
   collection,
-  doc,
   onSnapshot,
   serverTimestamp,
   query,
   orderBy,
-  limit,
   limitToLast,
 } from "firebase/firestore";
 import { AiFillCamera } from "react-icons/ai";
@@ -21,7 +19,6 @@ const Chat = () => {
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
   const [user] = useAuthState(auth);
-  const [count, setCount] = useState(0);
   const messageRef = collection(db, "messages");
   const q = query(messageRef, orderBy("submitTime", "asc"), limitToLast(100));
   const messagesEndRef = useRef();
