@@ -1,6 +1,6 @@
 import styles from "../../styles/Workouts.module.css";
 import { auth, db } from "../../utils/firebase";
-import { getDoc, doc } from "@firebase/firestore";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect, useState } from "react";
 import SelectedWorkout from "../../components/SelectedWorkout";
@@ -15,12 +15,34 @@ const Workout = () => {
     console.log(e.target.value);
   };
 
+  const getWorkouts = async () => {
+    const workoutRef = collection(db, "Exercises");
+    const q = query(workoutRef, where("id", "==", workoutInput));
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      querySnapshot.docs.map((doc) => {
+        setWorkout(doc.data());
+      });
+    });
+
+    return unsubscribe;
+  };
+
+  useEffect(() => {
+    getWorkouts();
+  }, [workoutInput]);
+
   return (
     <div className={styles.container}>
       <h1>Workouts</h1>
 
       {user ? (
-        <select name="workouts" id="workouts" onChange={selectedWorkout}>
+        <select
+          name="workouts"
+          id="workouts"
+          onChange={selectedWorkout}
+          className={styles.workoutSelector}
+        >
           <option value="default">Select a workout</option>
 
           <optgroup label="Strength">
@@ -40,7 +62,7 @@ const Workout = () => {
       )}
       {workoutInput !== "" ? (
         <div className={styles.workoutContainer}>
-          <SelectedWorkout workout={workoutInput} />
+          <SelectedWorkout workout={workout} key={workout} />
         </div>
       ) : null}
     </div>

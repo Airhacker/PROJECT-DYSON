@@ -1,40 +1,36 @@
-import { db } from "../utils/firebase";
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-  onSnapshot,
-} from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import styles from "../styles/SelectedWorkout.module.css";
 
 const SelectedWorkout = (props) => {
-  const [workout, setWorkout] = useState([]);
-
-  const getWorkouts = async () => {
-    const workoutRef = collection(db, "Exercises");
-    const q = query(workoutRef, where("id", "==", props.workout));
-
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      querySnapshot.docs.map((doc) => {
-        setWorkout(doc.data());
-      });
-    });
-
-    return unsubscribe;
-  };
-
-  useEffect(() => {
-    console.log("the props are", props.workout);
-    getWorkouts();
-  }, [props.workout]);
-
   return (
-    <div>
-      <h1>{workout.name}</h1>
-      <p>{workout.id}</p>
-      {workout.exerciseList &&
-        workout.exerciseList.map((exercise) => <p>{exercise}</p>)}
+    <div className={styles.container}>
+      <h2>{props.workout.name}</h2>
+
+      <form action="" className={styles.formContainer}>
+        {props.workout.exerciseList &&
+          props.workout.exerciseList.map((exercise) => {
+            return (
+              <div key={exercise + exercise.name}>
+                <hr />
+                <h3>{exercise.name}</h3>
+                <div className={styles.spanContainer}>
+                  <span>Sets</span>
+                  <span>lbs</span>
+                  <span>Reps</span>
+                  <span>Time</span>
+                </div>
+                {exercise.sets.map((set) => (
+                  <div key={exercise + set} className={styles.inputContainer}>
+                    <span>{set}</span>
+                    <input type="number" name="weight" id="weight" />
+                    <input type="number" name="reps" id="reps" />
+                    <input type={"time"} name="time" id="time" />
+                  </div>
+                ))}
+              </div>
+            );
+          })}
+      </form>
     </div>
   );
 };
