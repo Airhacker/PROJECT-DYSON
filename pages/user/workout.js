@@ -5,6 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect, useState } from "react";
 import StrengthPush from "../../components/workouts/StrengthPush";
 import StrengthPull from "../../components/workouts/StrengthPull";
+import SelectedWorkout from "../../components/SelectedWorkout";
 
 const Workout = () => {
   const [workoutInput, setWorkoutInput] = useState("");
@@ -44,8 +45,7 @@ const Workout = () => {
         <p>Please sign in to view workouts</p>
       )}
 
-      {workoutInput === "pushStrength" && <StrengthPush />}
-      {workoutInput === "pullStrength" && <StrengthPull />}
+      {workoutInput && <SelectedWorkout workout={workoutInput} />}
     </div>
   );
 };

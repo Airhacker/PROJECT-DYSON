@@ -1,97 +1,136 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { auth, db } from "../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import styles from "../styles/SelectedWorkout.module.css";
 import { FaWeightHanging } from "react-icons/fa";
 import { BsArrowRepeat } from "react-icons/bs";
-import { AiOutlineFieldTime } from "react-icons/ai";
+import { AiOutlineFieldTime, AiOutlinePlus } from "react-icons/ai";
 import { toast } from "react-toastify";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, doc, getDoc } from "firebase/firestore";
 
 const SelectedWorkout = (props) => {
-  const [workoutComplete, setWorkoutComplete] = useState([]);
-  const [weight, setWeight] = useState([]);
-  const [reps, setReps] = useState([]);
-  const [time, setTime] = useState([]);
+  const [selectedWorkout, setSelectedWorkout] = useState([]);
 
-  const [user] = useAuthState(auth);
+  const getWorkout = async () => {
+    if (props.workout) {
+      const selectedWorkoutRef = doc(db, "Exercises", props.workout);
+      const selectedWorkoutSnap = await getDoc(selectedWorkoutRef);
+
+      setSelectedWorkout(selectedWorkoutSnap.data());
+    }
+  };
+
+  useEffect(() => {
+    getWorkout();
+    if (selectedWorkout) console.log(selectedWorkout);
+  }, [props.workout]);
+
+  const [exercises, setExercises] = useState([
+    {
+      sets: "",
+      reps: "",
+      weight: "",
+      time: "",
+    },
+  ]);
+
+  const addExercise = () => {
+    setExercises([...exercises, { sets: "", reps: "", weight: "", time: "" }]);
+  };
+
+  const handleChange = (e, index) => {
+    const newExercises = [...exercises];
+    newExercises[index][e.target.name] = e.target.value;
+    setExercises(newExercises);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(exercises);
 
     const allWorkoutRef = collection(db, "AllWorkouts");
-
     await addDoc(allWorkoutRef, {
-      userName: user.displayName,
-      userPhoto: user.photoURL,
-      workoutName: props.workout.name,
-      workout: props.workout.exerciseList.map((exercise) => {
-        return {
-          name: exercise.name,
-          sets: exercise.sets.map((set) => {
-            console.log(weight);
-
-            return {
-              weight: weight[set],
-              reps: e.target.reps.value,
-              time: e.target.time.value,
-            };
-          }),
-        };
-      }),
+      workoutName: selectedWorkout.name,
+      exercises: exercises,
     });
 
-    toast.success("Workout completed! 🏋️‍♂️", {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 500,
+    toast.success("Workout Submitted Successfully 💪", {
+      position: "top-center",
+      autoClose: 1000,
     });
   };
 
   return (
-    <div className={styles.container}>
-      <h2>{props.workout.name}</h2>
+    <form onSubmit={handleSubmit} className={styles.formContainer}>
+      <h2>{selectedWorkout.name}</h2>
 
-      <form onSubmit={handleSubmit} className={styles.formContainer}>
-        {props.workout.exerciseList &&
-          props.workout.exerciseList.map((exercise) => {
-            return (
-              <div
-                key={exercise + exercise.name}
-                className={styles.exerciseContainer}
-              >
-                <hr />
-                <h3>{exercise.name}</h3>
-                <div className={styles.spanContainer}>
-                  <span>Sets</span>
-                  <span>
-                    <FaWeightHanging /> Weight
-                  </span>
-                  <span>
-                    <BsArrowRepeat /> Reps
-                  </span>
-                  <span>
-                    <AiOutlineFieldTime /> Time
-                  </span>
-                </div>
-                {exercise.sets.map((set) => (
-                  <div key={exercise + set} className={styles.inputContainer}>
-                    <span>{set}</span>
-                    <input
-                      type="number"
-                      name="weight"
-                      onBlur={(e) => setWeight([...weight, e.target.value])}
-                    />
-                    <input type="number" name="reps" />
-                    <input type={"time"} name="time" />
-                  </div>
-                ))}
-              </div>
-            );
-          })}
+      {exercises.map((exercise, index) => (
+        <div key={index} className={styles.exerciseContainer}>
+          <label htmlFor="exerciseName">Exercise Name:</label>
+          <select
+            name="exerciseName"
+            id="exerciseName"
+            onChange={(e) => handleChange(e, index)}
+          >
+            <option value="default">Select a Exercise</option>
 
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+            {/* Selection for selected exercises */}
+            {selectedWorkout.exerciseList &&
+              selectedWorkout.exerciseList.map((exercise, index) => (
+                <option
+                  key={index + exercise.exerciseName}
+                  value={exercise.exerciseName}
+                >
+                  {exercise.exerciseName}
+                </option>
+              ))}
+          </select>
+
+          <label htmlFor={`sets-${index}`}>Set Number</label>
+          <input
+            type="number"
+            id={`sets-${index}`}
+            name="sets"
+            value={exercise.sets}
+            onChange={(e) => handleChange(e, index)}
+          />
+
+          <label htmlFor={`reps-${index}`}>Reps</label>
+          <input
+            type="number"
+            id={`reps-${index}`}
+            name="reps"
+            value={exercise.reps}
+            onChange={(e) => handleChange(e, index)}
+          />
+
+          <label htmlFor={`weight-${index}`}>Weight</label>
+          <input
+            type="number"
+            id={`weight-${index}`}
+            name="weight"
+            value={exercise.weight}
+            onChange={(e) => handleChange(e, index)}
+          />
+
+          <label htmlFor={`time-${index}`}>Time</label>
+          <input
+            type="time"
+            id={`time-${index}`}
+            name="time"
+            value={exercise.time}
+            onChange={(e) => handleChange(e, index)}
+          />
+
+          <button type="button" onClick={addExercise}>
+            Add Exercise
+          </button>
+        </div>
+      ))}
+      <button type="submit" className={styles.submitButton}>
+        Submit Workout
+      </button>
+    </form>
   );
 };
 
