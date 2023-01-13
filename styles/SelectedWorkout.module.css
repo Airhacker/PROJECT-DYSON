@@ -11,6 +11,11 @@
   margin: 0rem;
 }
 
+.formContainer hr {
+  width: 100%;
+  border: 1px solid white;
+}
+
 .submitButton {
   padding: 1rem 3rem;
   border-radius: 15px;
@@ -29,6 +34,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  gap: 1rem;
 }
 
 .exerciseContainer label {
@@ -51,10 +57,48 @@
   border-bottom: 1px solid white;
 }
 
-.exerciseContainer button {
+.addExerciseButton {
   padding: 0.5rem 1.5rem;
   font-size: 0.75rem;
-  margin-bottom: 1rem;
+  margin: 1rem 0rem;
   border-radius: 15px;
   border: none;
+}
+
+.exerciseNameContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+/* container for exercise name */
+.exerciseNameContainer label {
+  font-size: 0.75rem;
+}
+
+.exerciseNameContainer select {
+  font-size: 0.75rem;
+  margin: 0;
+  flex: 1;
+}
+
+/* container for sets, time, weight, and reps */
+.statsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.statsContainer label {
+  font-size: 0.75rem;
+  max-width: 25%;
+}
+
+.statsContainer input {
+  font-size: 0.75rem;
+  margin: 0;
+  max-width: 25%;
 }

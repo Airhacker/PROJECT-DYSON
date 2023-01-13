@@ -66,67 +66,75 @@ const SelectedWorkout = (props) => {
 
       {exercises.map((exercise, index) => (
         <div key={index} className={styles.exerciseContainer}>
-          <label htmlFor="exerciseName">Exercise Name:</label>
-          <select
-            name="exerciseName"
-            id="exerciseName"
-            onChange={(e) => handleChange(e, index)}
-          >
-            <option value="default">Select a Exercise</option>
+          <hr />
+          <div className={styles.exerciseNameContainer}>
+            <label htmlFor="exerciseName">Exercise Name:</label>
+            <select
+              name="exerciseName"
+              id="exerciseName"
+              onChange={(e) => handleChange(e, index)}
+            >
+              <option value="default">Select a Exercise</option>
 
-            {/* Selection for selected exercises */}
-            {selectedWorkout.exerciseList &&
-              selectedWorkout.exerciseList.map((exercise, index) => (
-                <option
-                  key={index + exercise.exerciseName}
-                  value={exercise.exerciseName}
-                >
-                  {exercise.exerciseName}
-                </option>
-              ))}
-          </select>
+              {/* Selection for selected exercises */}
+              {selectedWorkout.exerciseList &&
+                selectedWorkout.exerciseList.map((exercise, index) => (
+                  <option
+                    key={index + exercise.exerciseName}
+                    value={exercise.exerciseName}
+                  >
+                    {exercise.exerciseName}
+                  </option>
+                ))}
+            </select>
+          </div>
 
-          <label htmlFor={`sets-${index}`}>Set Number</label>
-          <input
-            type="number"
-            id={`sets-${index}`}
-            name="sets"
-            value={exercise.sets}
-            onChange={(e) => handleChange(e, index)}
-          />
+          <div className={styles.statsContainer}>
+            <label htmlFor={`sets-${index}`}>Set Number</label>
+            <input
+              type="number"
+              id={`sets-${index}`}
+              name="sets"
+              value={exercise.sets}
+              onChange={(e) => handleChange(e, index)}
+            />
 
-          <label htmlFor={`reps-${index}`}>Reps</label>
-          <input
-            type="number"
-            id={`reps-${index}`}
-            name="reps"
-            value={exercise.reps}
-            onChange={(e) => handleChange(e, index)}
-          />
-
-          <label htmlFor={`weight-${index}`}>Weight</label>
-          <input
-            type="number"
-            id={`weight-${index}`}
-            name="weight"
-            value={exercise.weight}
-            onChange={(e) => handleChange(e, index)}
-          />
-
-          <label htmlFor={`time-${index}`}>Time</label>
-          <input
-            type="time"
-            id={`time-${index}`}
-            name="time"
-            value={exercise.time}
-            onChange={(e) => handleChange(e, index)}
-          />
-
-          <button type="button" onClick={addExercise}>
-            Add Exercise
-          </button>
+            <label htmlFor={`time-${index}`}>Time</label>
+            <input
+              type="time"
+              id={`time-${index}`}
+              name="time"
+              value={exercise.time}
+              onChange={(e) => handleChange(e, index)}
+            />
+          </div>
+          <div className={styles.statsContainer}>
+            <label htmlFor={`weight-${index}`}>Weight</label>
+            <input
+              type="number"
+              id={`weight-${index}`}
+              name="weight"
+              value={exercise.weight}
+              onChange={(e) => handleChange(e, index)}
+            />
+            <label htmlFor={`reps-${index}`}>Reps</label>
+            <input
+              type="number"
+              id={`reps-${index}`}
+              name="reps"
+              value={exercise.reps}
+              onChange={(e) => handleChange(e, index)}
+            />
+          </div>
         </div>
       ))}
+      <button
+        type="button"
+        onClick={addExercise}
+        className={styles.addExerciseButton}
+      >
+        Add Exercise
+      </button>
       <button type="submit" className={styles.submitButton}>
         Submit Workout
       </button>
