@@ -6,10 +6,17 @@ import { FaWeightHanging } from "react-icons/fa";
 import { BsArrowRepeat } from "react-icons/bs";
 import { AiOutlineFieldTime, AiOutlinePlus } from "react-icons/ai";
 import { toast } from "react-toastify";
-import { collection, addDoc, doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  doc,
+  getDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 
 const SelectedWorkout = (props) => {
   const [selectedWorkout, setSelectedWorkout] = useState([]);
+  const [user] = useAuthState(auth);
 
   const getWorkout = async () => {
     if (props.workout) {
@@ -50,6 +57,10 @@ const SelectedWorkout = (props) => {
 
     const allWorkoutRef = collection(db, "AllWorkouts");
     await addDoc(allWorkoutRef, {
+      userName: user.displayName,
+      userPhoto: user.photoURL,
+      userEmail: user.email,
+      timeStamp: serverTimestamp(),
       workoutName: selectedWorkout.name,
       exercises: exercises,
     });

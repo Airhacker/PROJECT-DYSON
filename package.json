@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@firebase/firestore": "^3.8.0",
+    "axios": "^1.2.2",
     "firebase": "^9.15.0",
     "framer-motion": "^7.10.0",
     "next": "12.3.1",
